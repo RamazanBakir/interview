@@ -1,0 +1,28 @@
+{
+  "name": "mind2",
+  "version": "1.0.0",
+  "description": "Proje açıklaması",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mysql"
+  ],
+  "author": "Proje yazarı",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "faker": "^6.6.6",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.3.3",
+    "sequelize": "^6.31.1",
+    "sequelize-binary-uuid": "^1.0.0",
+    "sequelize-cli": "^6.6.0",
+    "swagger-ui-express": "^4.6.3"
+  }
+}
