@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: branches_db
+      MYSQL_USER: newuser
+      MYSQL_PASSWORD: newpassword
+    ports:
+      - "3307:3306"
+volumes:
+  mysql-data:
