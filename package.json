@@ -23,6 +23,7 @@
     "sequelize": "^6.31.1",
     "sequelize-binary-uuid": "^1.0.0",
     "sequelize-cli": "^6.6.0",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3"
   }
 }
