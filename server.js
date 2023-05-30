@@ -1,19 +1,26 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const branchRoutes = require('./app/routes/branchRoutes');
 const app = express();
+const branchRoutes = require('./app/routes/branchRoutes');
+const database = require('./config/database');
 
-// TODO: daha sonra swagger eklenecek
-// const setupSwagger = require('./swagger');
+// Middleware'lerin eklenmesi
+app.use(express.json());
 
+// so
+app.use('/api', branchRoutes);
 
-dotenv.config();
-app.use(bodyParser.json());
-app.use('/api/branches', branchRoutes);
+// Veritabanına bağlantının sağlanması
+database
+    .authenticate()
+    .then(() => {
+        console.log('Veritabanına bağlandı.');
 
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Sunucu ${port} portunda çalışıyor...`);
-});
+        // Server'ın başlatılması
+        const port = process.env.PORT || 3000;
+        app.listen(port, () => {
+            console.log(`Server ${port} portunda çalışıyor.`);
+        });
+    })
+    .catch((error) => {
+        console.error('Veritabanına bağlanılamadı.', error);
+    });

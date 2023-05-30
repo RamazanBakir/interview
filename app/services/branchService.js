@@ -1,29 +1,22 @@
 const branchRepository = require('../repositories/branchRepository');
+const Branch = require('../../models/Branch');
 
-async function getAllBranches() {
-    return branchRepository.getAllBranches();
-}
+// Tüm şubeleri getir
+exports.getAllBranches = async () => {
+    return await branchRepository.getAllBranches();
+};
 
-async function getBranchById(id) {
-    return branchRepository.getBranchById(id);
-}
+// Yeni bir şube oluştur
+exports.createBranch = async (branchData) => {
+    return await branchRepository.createBranch(branchData);
+};
 
-async function createBranch(branchData) {
-    return branchRepository.createBranch(branchData);
-}
+// Şube bilgilerini güncelle
+exports.updateBranch = async (branchId, branchData) => {
+    return await branchRepository.updateBranch(branchId, branchData);
+};
 
-async function updateBranch(id, branchData) {
-    return branchRepository.updateBranch(id, branchData);
-}
-
-async function deleteBranch(id) {
-    return branchRepository.deleteBranch(id);
-}
-
-module.exports = {
-    getAllBranches,
-    getBranchById,
-    createBranch,
-    updateBranch,
-    deleteBranch
+// Şube sil
+exports.deleteBranch = async (branchId) => {
+    return await branchRepository.deleteBranch(branchId);
 };

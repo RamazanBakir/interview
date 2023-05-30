@@ -1,68 +1,72 @@
-const Branch = require('../../models/Branch');
+const branchService = require('../services/branchService');
 
-async function getAllBranches(req, res) {
+// Tüm şubeleri listele
+exports.getAllBranches = async (req, res) => {
     try {
-        const branches = await Branch.getAllBranches();
+        const branches = await branchService.getAllBranches();
         res.json(branches);
     } catch (error) {
-        res.status(500).json({ error: 'Bir hata oluştu.' });
+        res.status(500).json({ error: 'Şubeler alınamadı.' });
     }
-}
+};
 
-async function getBranchById(req, res) {
+// Şube oluştur
+exports.createBranch = async (req, res) => {
+    const { latitude, longitude, name, full_address, phone } = req.body;
+
     try {
-        const branch = await Branch.getBranchById(req.params.id);
+        const branch = await branchService.createBranch({ latitude, longitude, name, full_address, phone });
+        res.status(201).json(branch);
+    } catch (error) {
+        res.status(500).json({ error: 'Şube oluşturulamadı.' });
+    }
+};
+
+// Şube güncelle
+exports.updateBranch = async (req, res) => {
+    const { branchId } = req.params;
+    const { latitude, longitude, name, full_address, phone } = req.body;
+
+    try {
+        const branch = await branchService.updateBranch(branchId, { latitude, longitude, name, full_address, phone });
         if (branch) {
             res.json(branch);
         } else {
-            res.status(404).json({ error: 'Belirtilen şube bulunamadı.' });
+            res.status(404).json({ error: 'Şube bulunamadı.' });
         }
     } catch (error) {
-        res.status(500).json({ error: 'Bir hata oluştu.' });
+        res.status(500).json({ error: 'Şube güncellenemedi.' });
     }
-}
+};
 
-async function createBranch(req, res) {
-    try {
-        const branchData = req.body;
-        const insertedId = await Branch.createBranch(branchData);
-        res.status(201).json({ id: insertedId });
-    } catch (error) {
-        res.status(500).json({ error: 'Bir hata oluştu.' });
-    }
-}
+// Şube sil
+exports.deleteBranch = async (req, res) => {
+    const { branchId } = req.params;
 
-async function updateBranch(req, res) {
     try {
-        const branchData = req.body;
-        const success = await Branch.updateBranch(req.params.id, branchData);
-        if (success) {
-            res.json({ message: 'Şube başarıyla güncellendi.' });
+        const deletedBranch = await branchService.deleteBranch(branchId);
+        if (deletedBranch) {
+            res.json({ message: 'Şube silindi.' });
         } else {
-            res.status(404).json({ error: 'Belirtilen şube bulunamadı.' });
+            res.status(404).json({ error: 'Şube bulunamadı.' });
         }
     } catch (error) {
-        res.status(500).json({ error: 'Bir hata oluştu.' });
+        res.status(500).json({ error: 'Şube silinemedi.' });
     }
-}
-
-async function deleteBranch(req, res) {
-    try {
-        const success = await Branch.deleteBranch(req.params.id);
-        if (success) {
-            res.json({ message: 'Şube başarıyla silindi.' });
-        } else {
-            res.status(404).json({ error: 'Belirtilen şube bulunamadı.' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Bir hata oluştu.' });
-    }
-}
-
-module.exports = {
-    getAllBranches,
-    getBranchById,
-    createBranch,
-    updateBranch,
-    deleteBranch
+};
+// Şube bilgisini ID'ye göre getir
+exports.getBranchById = (branchId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM branches WHERE branch_id = ?';
+        db.query(query, branchId, (error, results) => {
+            if (error) {
+                reject(error);
+            } else if (results.length === 0) {
+                resolve(null);
+            } else {
+                const branch = results[0];
+                resolve(branch);
+            }
+        });
+    });
 };

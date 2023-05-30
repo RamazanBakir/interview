@@ -1,30 +1,62 @@
-const Branch = require('../../models/Branch');
+const db = require('../../config/database');
 
-async function getAllBranches() {
-    return Branch.find();
-}
+// Tüm şubeleri getir
+exports.getAllBranches = () => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM branches';
+        db.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
 
-async function getBranchById(id) {
-    return Branch.findById(id);
-}
+// Yeni bir şube oluştur
+exports.createBranch = (branchData) => {
+    return new Promise((resolve, reject) => {
+        const query = 'INSERT INTO branches SET ?';
+        db.query(query, branchData, (error, result) => {
+            if (error) {
+                reject(error);
+            } else {
+                const createdBranch = { branch_id: result.insertId, ...branchData };
+                resolve(createdBranch);
+            }
+        });
+    });
+};
 
-async function createBranch(branchData) {
-    const branch = new Branch(branchData);
-    return branch.save();
-}
+// Şube bilgilerini güncelle
+exports.updateBranch = (branchId, branchData) => {
+    return new Promise((resolve, reject) => {
+        const query = 'UPDATE branches SET ? WHERE branch_id = ?';
+        db.query(query, [branchData, branchId], (error, result) => {
+            if (error) {
+                reject(error);
+            } else if (result.affectedRows === 0) {
+                resolve(null);
+            } else {
+                resolve(branchData);
+            }
+        });
+    });
+};
 
-async function updateBranch(id, branchData) {
-    return Branch.findByIdAndUpdate(id, branchData, { new: true });
-}
-
-async function deleteBranch(id) {
-    return Branch.findByIdAndDelete(id);
-}
-
-module.exports = {
-    getAllBranches,
-    getBranchById,
-    createBranch,
-    updateBranch,
-    deleteBranch
+// Şube sil
+exports.deleteBranch = (branchId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM branches WHERE branch_id = ?';
+        db.query(query, branchId, (error, result) => {
+            if (error) {
+                reject(error);
+            } else if (result.affectedRows === 0) {
+                resolve(null);
+            } else {
+                resolve(branchId);
+            }
+        });
+    });
 };

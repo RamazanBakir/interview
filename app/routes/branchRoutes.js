@@ -3,10 +3,19 @@ const branchController = require('../controllers/branchController');
 
 const router = express.Router();
 
-router.get('/', branchController.getAllBranches);
-router.get('/:id', branchController.getBranchById);
-router.post('/', branchController.createBranch);
-router.put('/:id', branchController.updateBranch);
-router.delete('/:id', branchController.deleteBranch);
+// Tüm şubeleri getir
+router.get('/branches', branchController.getAllBranches);
+
+// Şube bilgisini ID'ye göre getir
+router.get('/branches/:branchId', branchController.getBranchById);
+
+// Yeni bir şube oluştur
+router.post('/branches', branchController.createBranch);
+
+// Şube güncelle
+router.put('/branches/:branchId', branchController.updateBranch);
+
+// Şube sil
+router.delete('/branches/:branchId', branchController.deleteBranch);
 
 module.exports = router;
