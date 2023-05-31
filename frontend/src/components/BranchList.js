@@ -23,13 +23,26 @@ const BranchList = () => {
     return (
         <div>
             <h2>Branches</h2>
-            {branches.map((branch) => (
-                <div key={branch.id}>
-                    <h3>{branch.name}</h3>
-                    <p>{branch.full_address}</p>
-                    <p>{branch.phone}</p>
-                </div>
-            ))}
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                </tr>
+                </thead>
+                <tbody>
+                {branches.map((branch) => (
+                    <tr key={branch.id}>
+                        <td>{branch.id}</td>
+                        <td>{branch.name}</td>
+                        <td>{branch.full_address}</td>
+                        <td>{branch.phone}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
         </div>
     );
 };

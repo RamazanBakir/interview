@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchBranches } from './store/branchSlice';
+import { fetchAllBranches } from './store/branchSlice';
 
 function App() {
   const branches = useSelector((state) => state.branches);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchBranches());
+    dispatch(fetchAllBranches());
   }, [dispatch]);
 
   return (
