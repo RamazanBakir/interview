@@ -20,3 +20,8 @@ exports.updateBranch = async (branchId, branchData) => {
 exports.deleteBranch = async (branchId) => {
     return await branchRepository.deleteBranch(branchId);
 };
+
+// Şube bilgisini ID'ye göre getir
+exports.getBranchById = async (branchId) => {
+    return await branchRepository.getBranchById(branchId);
+};

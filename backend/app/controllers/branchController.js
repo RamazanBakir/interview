@@ -3,14 +3,14 @@ const branchService = require('../services/branchService');
 // Tüm şubeleri listele
 exports.getAllBranches = async (req, res) => {
     try {
-        console.log("deneme")
         const branches = await branchService.getAllBranches();
         res.json(branches);
     } catch (error) {
-        console.log("deneme")
+        console.error('Şubeler alınamadı.', error);
         res.status(500).json({ error: 'Şubeler alınamadı.' });
     }
 };
+
 
 // Şube oluştur
 exports.createBranch = async (req, res) => {
@@ -58,18 +58,16 @@ exports.deleteBranch = async (req, res) => {
     }
 };
 // Şube bilgisini ID'ye göre getir
-exports.getBranchById = (branchId) => {
-    return new Promise((resolve, reject) => {
-        const query = 'SELECT * FROM branches WHERE branch_id = ?';
-        db.query(query, branchId, (error, results) => {
-            if (error) {
-                reject(error);
-            } else if (results.length === 0) {
-                resolve(null);
-            } else {
-                const branch = results[0];
-                resolve(branch);
-            }
-        });
-    });
+exports.getBranchById = async (req, res) => {
+    const { branchId } = req.params;
+    try {
+        const branch = await branchService.getBranchById(branchId);
+        if (branch) {
+            res.json(branch);
+        } else {
+            res.status(404).json({ error: 'Şube bulunamadı.' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Şube alınamadı.' });
+    }
 };

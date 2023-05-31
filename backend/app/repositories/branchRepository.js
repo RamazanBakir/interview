@@ -5,6 +5,7 @@ exports.getAllBranches = () => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM branches';
         db.query(query, (error, results) => {
+
             if (error) {
                 reject(error);
             } else {
@@ -56,6 +57,23 @@ exports.deleteBranch = (branchId) => {
                 resolve(null);
             } else {
                 resolve(branchId);
+            }
+        });
+    });
+};
+
+// Şube bilgisini ID'ye göre getir
+exports.getBranchById = (branchId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM branches WHERE branch_id = ?';
+        db.query(query, branchId, (error, results) => {
+            if (error) {
+                reject(error);
+            } else if (results.length === 0) {
+                resolve(null);
+            } else {
+                const branch = results[0];
+                resolve(branch);
             }
         });
     });
