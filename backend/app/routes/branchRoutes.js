@@ -6,12 +6,12 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Branches
- *   description: Branches management endpoints
+ *   description: Branches management endpointsAAA
  */
 
 /**
  * @swagger
- * /branches:
+ * /api/branches:
  *   get:
  *     summary: Get all branches
  *     tags: [Branches]
@@ -29,7 +29,7 @@ router.get('/branches', branchController.getAllBranches);
 
 /**
  * @swagger
- * /branches/{branchId}:
+ * /api/branches/{branchId}:
  *   get:
  *     summary: Get branch by ID
  *     tags: [Branches]
@@ -52,7 +52,7 @@ router.get('/branches/:branchId', branchController.getBranchById);
 
 /**
  * @swagger
- * /branches:
+ * /api/branches:
  *   post:
  *     summary: Create a new branch
  *     tags: [Branches]
@@ -74,7 +74,7 @@ router.post('/branches', branchController.createBranch);
 
 /**
  * @swagger
- * /branches/{branchId}:
+ * /api/branches/{branchId}:
  *   put:
  *     summary: Update a branch
  *     tags: [Branches]
@@ -103,7 +103,7 @@ router.put('/branches/:branchId', branchController.updateBranch);
 
 /**
  * @swagger
- * /branches/{branchId}:
+ * /api/branches/{branchId}:
  *   delete:
  *     summary: Delete a branch
  *     tags: [Branches]

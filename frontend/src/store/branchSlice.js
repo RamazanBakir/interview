@@ -5,6 +5,7 @@ import axios from 'axios';
 export const fetchAllBranches = createAsyncThunk(
     'branches/fetchAllBranches',
     async () => {
+        console.log("deneme")
         const response = await axios.get('/api/branches');
         return response.data;
     }

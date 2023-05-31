@@ -30,6 +30,7 @@ const Branch = sequelize.define('Branch', {
 }, {
     tableName: 'branches',
     timestamps: false
+
 });
 
 module.exports = Branch;

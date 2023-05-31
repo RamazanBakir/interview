@@ -3,9 +3,11 @@ const branchService = require('../services/branchService');
 // Tüm şubeleri listele
 exports.getAllBranches = async (req, res) => {
     try {
+        console.log("deneme")
         const branches = await branchService.getAllBranches();
         res.json(branches);
     } catch (error) {
+        console.log("deneme")
         res.status(500).json({ error: 'Şubeler alınamadı.' });
     }
 };
@@ -18,6 +20,7 @@ exports.createBranch = async (req, res) => {
         const branch = await branchService.createBranch({ latitude, longitude, name, full_address, phone });
         res.status(201).json(branch);
     } catch (error) {
+        console.error('Şube oluşturulamadı.', error);
         res.status(500).json({ error: 'Şube oluşturulamadı.' });
     }
 };

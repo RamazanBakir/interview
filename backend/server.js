@@ -4,6 +4,7 @@ const branchRoutes = require('./app/routes/branchRoutes');
 const database = require('./config/database');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger/swagger');
+const Branch = require('./models/Branch');
 
 // Middleware'lerin eklenmesi
 app.use(express.json());
@@ -18,6 +19,19 @@ database
     .authenticate()
     .then(() => {
         console.log('Veritabanına bağlandı.');
+        // return Branch.sync();
+        const Branch = require('./models/Branch');
+
+        Branch.create({
+            latitude: 123.3123,
+            longitude: 43.12423,
+            name: 'Example Branch',
+            full_address: 'Mugla Turkey',
+            phone: '1234567890'
+        })
+    })
+    .then(() => {
+        console.log('Veritabanı modeli başarıyla başlatıldı.');
 
         // Server'ın başlatılması
         const port = process.env.PORT || 3000;
@@ -26,5 +40,5 @@ database
         });
     })
     .catch((error) => {
-        console.error('Veritabanına bağlanılamadı.', error);
+        console.error('Veritabanına bağlanılamadı veya model başlatılamadı.', error);
     });

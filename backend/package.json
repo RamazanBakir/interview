@@ -4,7 +4,8 @@
   "description": "Proje açıklaması",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "proxy": "http://localhost:3000"
   },
   "keywords": [
     "node",
